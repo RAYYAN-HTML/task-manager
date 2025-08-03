@@ -13,7 +13,7 @@ $total_tasks = $pending_count + $completed_count;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Vortex | Productivity Companion</title>
+    <title>Task Vortex </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -86,7 +86,6 @@ $total_tasks = $pending_count + $completed_count;
             transform-origin: 50% 50%;
         }
         
-        /* Improved dropdown styles */
         .priority-dropdown {
             appearance: none;
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23a0aec0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
@@ -105,7 +104,6 @@ $total_tasks = $pending_count + $completed_count;
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23cbd5e0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
         }
         
-        /* Custom option styles */
         .priority-option {
             padding: 0.5rem 1rem;
         }
@@ -128,7 +126,7 @@ $total_tasks = $pending_count + $completed_count;
 </head>
 <body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 min-h-screen p-5 font-sans antialiased dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
     <div class="max-w-3xl mx-auto">
-        <!-- Floating action button for dark mode -->
+        <!-- action button for dark mode -->
         <button id="theme-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-primary shadow-lg hover:shadow-glow flex items-center justify-center text-white text-xl transition-all duration-300">
             <i class="fas fa-moon hidden dark:block"></i>
             <i class="fas fa-sun block dark:hidden"></i>
@@ -325,7 +323,7 @@ $total_tasks = $pending_count + $completed_count;
             const themeToggle = document.getElementById('theme-toggle');
             const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
             
-            // Set initial theme
+            // initial theme
             const currentTheme = localStorage.getItem('theme');
             if (currentTheme) {
                 document.documentElement.classList.toggle('dark', currentTheme === 'dark');
@@ -338,7 +336,7 @@ $total_tasks = $pending_count + $completed_count;
                 const isDark = document.documentElement.classList.toggle('dark');
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
                 
-                // Update SweetAlert theme if any dialogs are open
+                // SweetAlert 
                 if (Swal.isVisible()) {
                     Swal.close();
                     setTimeout(() => {
@@ -355,7 +353,7 @@ $total_tasks = $pending_count + $completed_count;
                 }
             });
             
-            // Task filtering
+            // Task filteration 
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'bg-primary/20', 'dark:bg-primary/30'));
@@ -393,7 +391,7 @@ $total_tasks = $pending_count + $completed_count;
                 });
             });
             
-            // Task completion handler
+            // Task completion 
             function handleTaskCompletion(taskId, taskItem) {
                 fetch(`complete_task.php?id=${taskId}`)
                     .then(response => {
@@ -419,7 +417,7 @@ $total_tasks = $pending_count + $completed_count;
                                 taskText.classList.remove('text-white', 'dark:text-gray-100');
                             }
                             
-                            // Remove complete button
+                            // complete button removal
                             const completeBtn = taskItem.querySelector('.complete-btn');
                             if (completeBtn) completeBtn.remove();
                             
@@ -432,7 +430,7 @@ $total_tasks = $pending_count + $completed_count;
                             // Update counters
                             updateTaskCounters(-1, 1);
                             
-                            // Show success message
+                            // success message
                             const isDark = document.documentElement.classList.contains('dark');
                             Swal.fire({
                                 title: 'Task Completed!',
@@ -459,7 +457,7 @@ $total_tasks = $pending_count + $completed_count;
                     });
             }
             
-            // Helper function to update counters
+            // counters
             function updateTaskCounters(pendingChange, completedChange) {
                 const pendingCountElement = document.querySelector('[data-filter="pending"] span');
                 const completedCountElement = document.querySelector('[data-filter="completed"] span');
@@ -476,9 +474,8 @@ $total_tasks = $pending_count + $completed_count;
                 }
             }
             
-            // Event delegation for completion
             document.addEventListener('click', function(e) {
-                // Complete button or checkbox
+                // Complete button 
                 if (e.target.closest('.complete-btn') || e.target.closest('.complete-checkbox')) {
                     const btn = e.target.closest('.complete-btn') || e.target.closest('.complete-checkbox');
                     const taskId = btn.dataset.taskId;
@@ -520,10 +517,8 @@ $total_tasks = $pending_count + $completed_count;
                                         setTimeout(() => {
                                             taskItem.remove();
                                             
-                                            // Update counters
                                             updateTaskCounters(isCompleted ? 0 : -1, isCompleted ? -1 : 0);
                                             
-                                            // Show empty state if needed
                                             if (document.querySelectorAll('.task-item').length === 0) {
                                                 document.getElementById('empty-state').classList.remove('hidden');
                                             }
@@ -536,7 +531,6 @@ $total_tasks = $pending_count + $completed_count;
                 }
             });
             
-            // Add animation to new tasks if added
             if (window.location.search.includes('task_added=true')) {
                 const lastTask = document.querySelector('.task-item:last-child');
                 if (lastTask) {
